@@ -1,0 +1,33 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('clone') {
+            steps {
+                echo 'cloning'
+                git url: "https://github.com/kus123123/django-notes-app.git" ,branch: "main"
+            }
+        }
+        stage('build')
+        {
+            steps{
+            echo 'building'
+            sh "docker build -t notesapp1 ."
+            }
+        }
+        stage('running contianer'){
+            steps{
+                echo 'running container'
+                sh "docker run -d -p 8000:8000 notesapp1"
+            }
+        }
+        stage ('copying file to nginx'){
+            steps{
+                echo "copying files to nginx"
+                
+            }
+            
+        }
+    
+}
+}
